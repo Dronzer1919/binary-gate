@@ -1,0 +1,26 @@
+@use 'mixins';
+@use 'themes';
+
+// The premium dark theme is the default. An explicit `data-theme` on <html> switches it;
+// users who ask the OS for more contrast get the high-contrast palette automatically.
+:root {
+  @include mixins.theme-colors(themes.$dark, dark);
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-theme]) {
+    @include mixins.theme-colors(themes.$high-contrast, dark);
+  }
+}
+
+[data-theme='dark'] {
+  @include mixins.theme-colors(themes.$dark, dark);
+}
+
+[data-theme='light'] {
+  @include mixins.theme-colors(themes.$light, light);
+}
+
+[data-theme='high-contrast'] {
+  @include mixins.theme-colors(themes.$high-contrast, dark);
+}

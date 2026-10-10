@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.label {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.req {
+  margin-inline-start: var(--space-1);
+  color: var(--color-error);
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.error {
+  min-block-size: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-error);
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

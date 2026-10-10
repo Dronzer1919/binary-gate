@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.card {
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--color-text);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius);
+
+  background: var(--color-surface-alt);
+  // --rx / --ry are set by the appTilt directive on the host.
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 24px 50px -24px var(--color-glow);
+  }
+
+  &--elevated {
+    box-shadow: 0 2px 8px var(--color-shadow);
+  }
+}
+
+.body {
+  flex: 1;
+  padding: var(--space-4);
+}
+
+.heading {
+  margin-block-end: var(--space-2);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.footer {
+  padding: var(--space-3) var(--space-4);
+  border-block-start: 1px solid var(--color-border-subtle);
+
+  &:empty {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .card {
+    border-color: CanvasText;
+  }
+}

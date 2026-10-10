@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test:ci
+      - run: npm run build:prod
+      # Fails the build if any Lighthouse category / Web Vital budget in lighthouserc.json regresses.
+      - run: npm run lighthouse
+
+  # Example CDN deploy of the static browser output (Cloudflare Pages shown; swap for S3+CloudFront, Netlify, ...).
+  # Needs the CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID secrets and a prior `npm run build:prod`.
+  # deploy:
+  #   needs: verify
+  #   if: github.ref == 'refs/heads/main'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with: { node-version: 22, cache: npm }
+  #     - run: npm ci && npm run build:prod
+  #     - run: npx wrangler pages deploy dist/app/browser --project-name=fast-themed-app

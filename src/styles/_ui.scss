@@ -1,0 +1,217 @@
+@use 'mixins';
+@use 'typography' as t;
+
+// Shared page-level building blocks (type utilities, buttons, sections, annotations, reveal).
+
+.display {
+  @include t.type(display);
+  text-wrap: balance;
+}
+
+.h2 {
+  @include t.type(h2);
+  text-wrap: balance;
+}
+
+.h3 {
+  @include t.type(h3);
+}
+
+.lead {
+  @include t.type(lead);
+  color: var(--color-text-muted);
+  max-inline-size: 38rem;
+}
+
+.small {
+  @include t.type(small);
+  color: var(--color-text-muted);
+}
+
+.grad {
+  @include mixins.accent-gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  @include t.eyebrow;
+  color: var(--color-primary);
+}
+
+.icon {
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  flex: none;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// ---------- sections ----------
+.section {
+  padding-block: var(--section-y);
+  // Below-the-fold sections skip layout/paint until near the viewport (big win on slow phones).
+  content-visibility: auto;
+  contain-intrinsic-size: auto 60rem;
+
+  &--alt {
+    background: linear-gradient(180deg, var(--color-surface), var(--color-bg));
+    border-block: 1px solid var(--color-border-subtle);
+  }
+
+  &__head {
+    display: grid;
+    gap: 1rem;
+    margin-block-end: clamp(2rem, 5vw, 3.5rem);
+  }
+}
+
+.split {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+
+  > div {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 60rem) {
+    grid-template-columns: 1.1fr 0.9fr;
+
+    &--form {
+      align-items: start;
+    }
+  }
+}
+
+// ---------- buttons ----------
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-block-size: var(--size-touch);
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-on-primary);
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  @include mixins.accent-gradient;
+  box-shadow: 0 8px 30px -8px var(--color-glow);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+
+  &:hover {
+    color: var(--color-on-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px -6px var(--color-glow);
+  }
+
+  &--small {
+    padding-block: 0.5rem;
+  }
+
+  &--ghost {
+    color: var(--color-text);
+    background: transparent;
+    border-color: var(--color-border);
+    box-shadow: none;
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+}
+
+// ---------- annotations ----------
+.annot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  &__dot {
+    flex: none;
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--color-glow);
+  }
+
+  &__line {
+    flex: 0 1 6rem;
+    block-size: 1px;
+    background: linear-gradient(90deg, var(--color-primary), transparent);
+    transform-origin: left;
+  }
+
+  &--caption {
+    @include t.type(small);
+    margin-block-start: 1rem;
+    color: var(--color-text-muted);
+  }
+}
+
+.ticks {
+  display: grid;
+  gap: 0.35rem;
+  @include t.type(small);
+
+  li {
+    display: flex;
+    gap: 0.6rem;
+
+    &::before {
+      content: '';
+      flex: none;
+      inline-size: 0.5rem;
+      block-size: 0.5rem;
+      margin-block-start: 0.45em;
+      border-radius: 2px;
+      background: var(--color-primary);
+    }
+  }
+}
+
+// ---------- scroll reveal (see core/ui/reveal.ts) ----------
+.reveal {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  .annot__line {
+    transform: scaleX(0);
+    transition: transform 900ms 250ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  &--in {
+    opacity: 1;
+    transform: none;
+
+    .annot__line {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .btn {
+    border-color: ButtonText;
+  }
+
+  .grad {
+    color: CanvasText;
+    background: none;
+  }
+}

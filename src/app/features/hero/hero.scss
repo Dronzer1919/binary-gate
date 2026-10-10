@@ -1,0 +1,156 @@
+@use '../../../styles/typography' as t;
+
+:host {
+  display: block;
+}
+
+.hero {
+  padding-block: clamp(2.5rem, 7vw, 5.5rem) var(--section-y);
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgb(168 153 255 / 18%), transparent 60%),
+    radial-gradient(50rem 30rem at 0% 0%, rgb(92 200 255 / 14%), transparent 60%);
+}
+
+.grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+
+  @media (min-width: 60rem) {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+}
+
+.copy {
+  display: grid;
+  gap: 1.5rem;
+  // transform-only entrance so the heading (LCP) is never hidden
+  animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(1.5rem);
+  }
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--color-border-subtle);
+
+  div {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  dt {
+    @include t.type(small);
+    color: var(--color-text-muted);
+  }
+
+  dd {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: calc(var(--radius) * 1.5);
+  box-shadow: 0 30px 80px -30px var(--color-glow);
+  overflow: hidden;
+  contain: layout paint;
+}
+
+.poster {
+  transition: opacity 600ms ease;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  opacity: 0;
+  transition: opacity 600ms ease;
+  touch-action: pan-y;
+}
+
+.live {
+  .canvas {
+    opacity: 1;
+  }
+
+  .poster {
+    opacity: 0;
+  }
+}
+
+// ---------- annotated callouts ----------
+.callouts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.callout {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: t.$font-mono;
+  font-size: 0.75rem;
+  color: var(--color-text);
+
+  .dot {
+    inline-size: 0.6rem;
+    block-size: 0.6rem;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--color-glow);
+  }
+
+  .annot__line {
+    flex: none;
+    inline-size: 1.75rem;
+    background: var(--color-primary);
+  }
+
+  .label {
+    padding: 0.2rem 0.55rem;
+    white-space: nowrap;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 0.4rem;
+  }
+
+  &.a {
+    inset: 22% auto auto 4%;
+  }
+
+  &.b {
+    inset: 52% 4% auto auto;
+    flex-direction: row-reverse;
+
+    .annot__line {
+      transform-origin: right;
+    }
+  }
+
+  &.c {
+    inset: auto auto 12% 8%;
+  }
+}

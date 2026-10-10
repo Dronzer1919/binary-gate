@@ -1,0 +1,42 @@
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" routerLink="/" fragment="home" aria-label="Node Network with Binary Gate, home">
+      <img class="brand-mark" src="assets/logo-mark.jpg" width="56" height="56" alt="" />
+      <span>Node Network with Binary Gate</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul>
+        @for (item of navItems; track item.id) {
+          <li>
+            <a routerLink="/" [fragment]="item.id" [attr.aria-current]="onHome() && active() === item.id ? 'true' : null">{{ item.label }}</a>
+          </li>
+        }
+        <li>
+          <a routerLink="/contact" routerLinkActive ariaCurrentWhenActive="page">Get a quote</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="theme">
+      <select id="theme-select" aria-label="Theme" (change)="onThemeChange($event)">
+        <option value="" selected disabled hidden>Theme</option>
+        @for (t of themes; track t.value) {
+          <option [value]="t.value">{{ t.label }}</option>
+        }
+      </select>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-bar">
+    <p>&copy; Node Network with Binary Gate. All rights reserved.</p>
+  </div>
+</footer>

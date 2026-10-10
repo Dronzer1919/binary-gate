@@ -1,0 +1,42 @@
+@use '../../../styles/typography' as t;
+
+:host {
+  display: block;
+  // Below the hero: skip layout/paint of this whole section until it is near the viewport.
+  // `auto` remembers the real height once it has been rendered, so scrolling stays stable.
+  content-visibility: auto;
+  contain-intrinsic-size: auto 46rem;
+}
+
+.values {
+  display: grid;
+  gap: 1.25rem;
+  margin-block-start: 0.5rem;
+
+  li {
+    display: flex;
+    gap: 1rem;
+  }
+
+  p {
+    color: var(--color-text-muted);
+  }
+}
+
+.mark {
+  @include t.eyebrow;
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+}
+
+app-picture {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: calc(var(--radius) * 1.5);
+  overflow: hidden;
+}

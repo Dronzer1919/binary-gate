@@ -1,0 +1,80 @@
+import type { IconName } from '../../shared';
+import type { ProductId } from '../../core/three/product-models';
+
+export type GroupId = 'internal' | 'peripheral' | 'active' | 'passive';
+
+export interface ProductGroup {
+  readonly id: GroupId;
+  readonly title: string;
+  readonly blurb: string;
+  readonly icon: IconName;
+}
+
+export interface Product {
+  readonly no: number;
+  readonly id: ProductId;
+  readonly name: string;
+  readonly group: GroupId;
+  readonly function: string;
+  readonly interface: string;
+}
+
+export const GROUPS: readonly ProductGroup[] = [
+  {
+    id: 'internal',
+    title: 'Internal Hardware',
+    blurb: 'The components inside every workstation and server.',
+    icon: 'chip',
+  },
+  {
+    id: 'peripheral',
+    title: 'External Peripherals',
+    blurb: 'Everything that plugs into the desk: input, display, capture, print, storage and power protection.',
+    icon: 'keyboard',
+  },
+  {
+    id: 'active',
+    title: 'Active Networking',
+    blurb: 'Powered equipment that forwards, routes, secures and stores your network traffic and data.',
+    icon: 'network',
+  },
+  {
+    id: 'passive',
+    title: 'Passive Infrastructure',
+    blurb: 'The cabling, termination, optics and racks that every network is built on.',
+    icon: 'headset',
+  },
+];
+
+export const PRODUCTS: readonly [Product, ...Product[]] = [
+  { no: 1, id: 'cpu', name: 'CPU (Central Processing Unit)', group: 'internal', function: 'Executes calculations, system logic, and software instructions.', interface: 'LGA / PGA Socket' },
+  { no: 2, id: 'motherboard', name: 'Motherboard', group: 'internal', function: 'Central circuit board interconnecting CPU, memory, expansion buses, and power.', interface: 'ATX / Micro-ATX / Mini-ITX' },
+  { no: 3, id: 'ram', name: 'RAM (Random Access Memory)', group: 'internal', function: 'High-speed volatile memory holding active system processes and runtime data.', interface: 'DDR4 / DDR5 DIMM' },
+  { no: 4, id: 'gpu', name: 'GPU (Graphics Processing Unit)', group: 'internal', function: 'Dedicated processor for 2D/3D graphics, video rendering, and parallel computation.', interface: 'PCIe x16' },
+  { no: 5, id: 'ssd', name: 'SSD (Solid State Drive)', group: 'internal', function: 'High-speed non-volatile flash storage for OS and applications.', interface: 'M.2 NVMe (PCIe) / SATA III' },
+  { no: 6, id: 'hdd', name: 'HDD (Hard Disk Drive)', group: 'internal', function: 'Magnetic platter drive used for bulk capacity and mass data archiving.', interface: 'SATA III (3.5" / 2.5")' },
+  { no: 7, id: 'psu', name: 'PSU (Power Supply Unit)', group: 'internal', function: 'Converts AC mains power to regulated DC rails (+12V, +5V, +3.3V).', interface: 'ATX12V / ATX 3.0 / SFX' },
+  { no: 8, id: 'cooler', name: 'CPU Cooler / Liquid AIO', group: 'internal', function: 'Dissipates thermal energy from the processor via heatsinks, fans, or liquid loops.', interface: '4-Pin PWM / AIO Header' },
+  { no: 9, id: 'chassis', name: 'PC Chassis (Case)', group: 'internal', function: 'Structural enclosure providing mounting points, airflow paths, and physical shielding.', interface: 'Standard ATX / Mid-Tower' },
+  { no: 10, id: 'audio-interface', name: 'Audio Interface / Sound Card', group: 'internal', function: 'Dedicated digital-to-analog and analog-to-digital signal conversion.', interface: 'PCIe / USB / Thunderbolt' },
+  { no: 11, id: 'keyboard', name: 'Keyboard', group: 'peripheral', function: 'Alphanumeric and command input device using mechanical or membrane switches.', interface: 'USB / 2.4 GHz / Bluetooth' },
+  { no: 12, id: 'mouse', name: 'Mouse / Pointing Device', group: 'peripheral', function: 'Optical or laser peripheral for 2D cursor coordinate input and navigation.', interface: 'USB / 2.4 GHz / Bluetooth' },
+  { no: 13, id: 'monitor', name: 'Monitor', group: 'peripheral', function: 'Visual display unit presenting graphical user interfaces.', interface: 'DisplayPort / HDMI / USB-C' },
+  { no: 14, id: 'webcam', name: 'Webcam', group: 'peripheral', function: 'Video capture device for streaming, video conferencing, and facial recognition.', interface: 'USB 3.0 / USB-C' },
+  { no: 15, id: 'microphone', name: 'Microphone', group: 'peripheral', function: 'Acoustic-to-electric transducer capturing voice and instrument audio.', interface: 'USB / XLR (via Interface)' },
+  { no: 16, id: 'printer', name: 'Printer', group: 'peripheral', function: 'Produces physical hard copies of documents (laser, inkjet, or thermal).', interface: 'USB / Ethernet / Wi-Fi' },
+  { no: 17, id: 'external-drive', name: 'External Storage Drive', group: 'peripheral', function: 'Portable storage unit used for off-site backups and local data transfer.', interface: 'USB 3.2 / Thunderbolt' },
+  { no: 18, id: 'ups', name: 'UPS (Uninterruptible Power Supply)', group: 'peripheral', function: 'Battery backup system protecting against power drops, surges, and blackouts.', interface: 'AC Outlets / USB (Status)' },
+  { no: 19, id: 'nic', name: 'NIC (Network Interface Card)', group: 'active', function: 'Controller hardware providing physical network access and a unique MAC address.', interface: 'PCIe / Onboard / RJ45 / SFP+' },
+  { no: 20, id: 'network-switch', name: 'Network Switch', group: 'active', function: 'Layer 2/3 device forwarding Ethernet frames directly using MAC address tables.', interface: 'RJ45 Ethernet / SFP+ / QSFP' },
+  { no: 21, id: 'router', name: 'Router', group: 'active', function: 'Layer 3 gateway directing packet traffic between distinct IP subnets and the WAN.', interface: 'Gigabit/10G Ethernet / WAN Ports' },
+  { no: 22, id: 'wireless-ap', name: 'Wireless Access Point (WAP)', group: 'active', function: 'Transceiver broadcasting wireless signals to bridge Wi-Fi clients into the wired LAN.', interface: 'Wi-Fi 6 / 6E / 7 (PoE RJ45)' },
+  { no: 23, id: 'firewall', name: 'Hardware Firewall / UTM', group: 'active', function: 'Dedicated appliance performing stateful packet inspection, IDS/IPS, and VPN handling.', interface: 'Gigabit/10G Ethernet Ports' },
+  { no: 24, id: 'modem-ont', name: 'Modem / ONT', group: 'active', function: 'Translates ISP carrier signals (coax, DSL, or fiber GPON) to standard digital Ethernet.', interface: 'Coax / GPON Fiber to RJ45' },
+  { no: 25, id: 'nas', name: 'NAS (Network Attached Storage)', group: 'active', function: 'Dedicated multi-bay appliance providing centralized file-level network storage.', interface: 'SMB / NFS over Ethernet' },
+  { no: 26, id: 'ethernet-cable', name: 'Twisted-Pair Ethernet Cable', group: 'passive', function: 'Copper transmission media for local networking up to 100 meters.', interface: 'Cat6 / Cat6a / Cat8 (RJ45)' },
+  { no: 27, id: 'fiber-cable', name: 'Fiber Optic Cable', group: 'passive', function: 'Glass core cable offering immune-to-EMI, long-distance, high-bandwidth links.', interface: 'Single-Mode (OS2) / Multi-Mode (OM4)' },
+  { no: 28, id: 'patch-panel', name: 'Patch Panel', group: 'passive', function: 'Rack-mounted termination array that consolidates and organizes incoming structured cables.', interface: '19-inch Rack / Keystone Jacks' },
+  { no: 29, id: 'optical-transceiver', name: 'Optical Transceiver', group: 'passive', function: 'Hot-swappable module converting electrical switch signals into optical light waves.', interface: 'SFP / SFP+ / QSFP28 (LC/MPO)' },
+  { no: 30, id: 'server-rack', name: 'Server Rack & PDU', group: 'passive', function: 'Standardized frame housing equipment alongside power distribution outlets.', interface: '19-inch EIA-310 Standard' },
+];

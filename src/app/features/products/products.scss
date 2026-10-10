@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  // Below the hero: skip layout/paint of this whole section until it is near the viewport.
+  // `auto` remembers the real height once it has been rendered, so scrolling stays stable.
+  content-visibility: auto;
+  contain-intrinsic-size: auto 70rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr));
+  perspective: 1200px;
+
+  > li {
+    display: flex;
+  }
+
+  app-card {
+    inline-size: 100%;
+  }
+}
+
+.body {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+
+  p {
+    color: var(--color-text-muted);
+  }
+}
+
+.lead-icon {
+  color: var(--color-primary);
+  font-size: 1.6rem;
+}
+
+.perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin-block-start: clamp(2rem, 5vw, 3rem);
+  color: var(--color-text-muted);
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  app-icon {
+    color: var(--color-primary);
+  }
+}
+
+.more {
+  margin-block-start: 1.5rem;
+}

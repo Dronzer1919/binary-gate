@@ -1,0 +1,305 @@
+:host {
+  display: block;
+}
+
+// Embedded in the home page it sits far below the hero: skip its layout until it is near the viewport.
+:host(.is-embedded) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 150rem;
+}
+
+.page {
+  padding-block: clamp(2rem, 5vw, 4rem) var(--section-y);
+}
+
+// On the home page the catalogue is one more section between Products and Solutions.
+.embedded .page {
+  padding-block: var(--section-y);
+}
+
+.more {
+  margin-block-start: 0.5rem;
+}
+
+.head {
+  display: grid;
+  gap: 1rem;
+  margin-block-end: 2rem;
+}
+
+// Row above the heading: section label on the left, "now showing" + view toggle on the right.
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+// The section label never wraps; on narrow screens the right-hand group wraps below it instead.
+.top > .annot {
+  flex: none;
+  white-space: nowrap;
+}
+
+.top-right {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-inline-start: auto;
+}
+
+.now {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  margin: 0;
+
+  .now-label {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  strong {
+    color: var(--color-primary);
+  }
+}
+
+.view {
+  display: inline-flex;
+  padding: 0.2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.seg {
+  min-block-size: 2.25rem;
+  padding: 0.25rem 1rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    color: var(--color-on-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-2));
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-start: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: var(--size-touch);
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+
+  // Pressed state is shown by fill + a check mark, never colour alone.
+  &[aria-pressed='true'] {
+    color: var(--color-on-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent-2));
+    border-color: transparent;
+
+    &::before {
+      content: '\2713';
+    }
+  }
+}
+
+.count {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+// The viewer sits directly under the tracker; the product details and controls are beside it.
+.showcase {
+  display: grid;
+  gap: 1.25rem;
+  align-items: center;
+  margin-block-end: 2.5rem;
+  // Often below the first screen: skip its layout until near the viewport (it renders normally when visible).
+  content-visibility: auto;
+  contain-intrinsic-size: auto 34rem;
+
+  @media (min-width: 64rem) {
+    grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 1fr);
+    gap: 2rem;
+  }
+}
+
+.detail {
+  display: grid;
+  gap: 1rem;
+}
+
+.info {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius);
+
+  .fn,
+  .spec {
+    color: var(--color-text-muted);
+  }
+
+  .spec strong {
+    color: var(--color-text);
+  }
+}
+
+.steps {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.step {
+  flex: 1;
+  padding-inline: 0.5rem;
+  min-block-size: var(--size-touch);
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+
+  // Play/Pause is a toggle: "playing" is also shown by a marker, not by colour alone.
+  &[aria-pressed='true']::before {
+    content: '\25B6\00a0';
+  }
+}
+
+.list {
+  display: grid;
+  gap: 2.5rem;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 190rem;
+}
+
+.group {
+  display: grid;
+  gap: 0.75rem;
+  // Groups that are off-screen skip layout/paint until scrolled near (cuts initial render work).
+  content-visibility: auto;
+  contain-intrinsic-size: auto 42rem;
+}
+
+.group-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+
+  app-icon {
+    color: var(--color-primary);
+  }
+
+  .small {
+    font-weight: 400;
+  }
+}
+
+.items {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+
+.item {
+  display: flex;
+  gap: 0.85rem;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  text-align: start;
+  color: var(--color-text);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+
+  &:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+  }
+
+  &[aria-pressed='true'] {
+    border-color: var(--color-primary);
+    box-shadow:
+      inset 4px 0 0 var(--color-primary),
+      0 12px 30px -14px var(--color-glow);
+  }
+}
+
+.no {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-primary);
+}
+
+.text {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.fn {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.spec {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+}
+
+@media (forced-colors: active) {
+  .item[aria-pressed='true'],
+  .chip[aria-pressed='true'] {
+    outline: 2px solid Highlight;
+  }
+}

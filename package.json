@@ -1,0 +1,70 @@
+{
+  "name": "angular-fast-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:host": "node scripts/start.mjs",
+    "build": "ng build && node scripts/postbuild.mjs",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:app": "node dist/app/server/server.mjs",
+    "lint": "ng lint",
+    "test:ci": "ng test --no-watch",
+    "build:prod": "ng build --configuration production && node scripts/postbuild.mjs",
+    "images": "node scripts/generate-images.mjs",
+    "lighthouse": "lhci autorun",
+    "serve:ssr": "node dist/app/server/server.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "smoke:catalog": "node scripts/smoke-catalog.mjs",
+    "start:prod": "npm run build:prod && node dist/app/server/server.mjs"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "packageManager": "npm@10.9.4",
+  "dependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-server": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "@angular/ssr": "^21.0.2",
+    "@sentry/browser": "^11.2.0",
+    "compression": "^1.8.2",
+    "express": "^5.1.0",
+    "rxjs": "~7.8.0",
+    "three": "^0.186.1",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.0.2",
+    "@angular/cli": "^21.0.2",
+    "@angular/compiler-cli": "^21.0.0",
+    "@lhci/cli": "^0.15.1",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.17.19",
+    "@types/three": "^0.186.0",
+    "angular-eslint": "^21.4.0",
+    "eslint": "^9.39.5",
+    "jsdom": "^27.1.0",
+    "puppeteer-core": "^25.12.0",
+    "sharp": "^0.35.5",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^4.0.8"
+  }
+}

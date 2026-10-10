@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+picture,
+img {
+  display: block;
+  inline-size: 100%;
+}
+
+img {
+  block-size: auto;
+}
+
+:host(.fill) {
+  position: absolute;
+  inset: 0;
+
+  picture,
+  img {
+    block-size: 100%;
+    object-fit: cover;
+  }
+}
+
+:host(.cover) img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+// Dark artwork by default; the light theme shows the recoloured variants instead. A hidden lazy
+// image is never fetched, so only the visible set downloads.
+.light {
+  display: none;
+}
+
+:host-context([data-theme='light']) {
+  .dark {
+    display: none;
+  }
+
+  .light {
+    display: block;
+  }
+}

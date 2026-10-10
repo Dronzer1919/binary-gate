@@ -1,0 +1,30 @@
+// The single colour mixin: turns a palette map into CSS custom properties (`--color-<token>`)
+// so components only ever read `var(--color-*)` and themes switch at runtime with no extra CSS.
+@mixin theme-colors($palette, $scheme: light) {
+  color-scheme: $scheme;
+
+  @each $token, $value in $palette {
+    --color-#{$token}: #{$value};
+  }
+}
+
+@mixin accent-gradient($angle: 135deg) {
+  background: linear-gradient($angle, var(--color-primary), var(--color-accent-2));
+}
+
+@mixin focus-ring {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
