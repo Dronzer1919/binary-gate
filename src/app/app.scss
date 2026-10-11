@@ -23,11 +23,17 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  min-inline-size: 0;
   font-weight: 700;
   font-size: 1.125rem;
   letter-spacing: -0.01em;
   color: var(--color-text);
   text-decoration: none;
+
+  span {
+    // Long company name: wrap on phones instead of pushing the controls off screen.
+    line-height: 1.2;
+  }
 
   &:hover {
     color: var(--color-text);
@@ -35,47 +41,127 @@
 }
 
 .brand-mark {
+  flex: none;
   inline-size: 3.5rem;
   block-size: 3.5rem;
   border-radius: 0.5rem;
   object-fit: cover;
+
+  @media (max-width: 63.99rem) {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+  }
+}
+
+.menu-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  flex: none;
+  inline-size: var(--size-touch);
+  block-size: var(--size-touch);
+  padding: 0;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  cursor: pointer;
+
+  &__bar {
+    display: block;
+    inline-size: 1.25rem;
+    block-size: 2px;
+    background: currentcolor;
+    border-radius: 1px;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  &[aria-expanded='true'] &__bar:nth-child(1) {
+    transform: translateY(calc(0.3rem + 2px)) rotate(45deg);
+  }
+
+  &[aria-expanded='true'] &__bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  &[aria-expanded='true'] &__bar:nth-child(3) {
+    transform: translateY(calc(-0.3rem - 2px)) rotate(-45deg);
+  }
+
+  @media (min-width: 64rem) {
+    display: none;
+  }
 }
 
 .nav {
+  // Phones/tablets: a full-width panel under the header, opened by the hamburger.
+  display: none;
   flex: 1 1 100%;
-  order: 3;
-  overflow-x: auto;
+  order: 4;
+  padding-block-end: 0.75rem;
+
+  &--open {
+    display: block;
+  }
 
   ul {
     display: flex;
+    flex-direction: column;
     gap: 0.25rem;
   }
 
   a {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     min-block-size: var(--size-touch);
     padding-inline: 0.75rem;
-    white-space: nowrap;
     color: var(--color-text-muted);
     text-decoration: none;
-    border-block-end: 2px solid transparent;
+    border-inline-start: 3px solid transparent;
+    border-radius: 0.4rem;
 
     &:hover {
       color: var(--color-text);
+      background: var(--color-surface-alt);
     }
 
-    // The current section is marked with an underline as well as colour.
-    &[aria-current='true'] {
+    // The current section is marked with a bar as well as colour.
+    &[aria-current='true'],
+    &[aria-current='page'] {
       color: var(--color-text);
-      border-block-end-color: var(--color-primary);
+      border-inline-start-color: var(--color-primary);
     }
   }
 
   @media (min-width: 64rem) {
+    display: block;
     flex: 1;
     order: 0;
-    overflow: visible;
+    padding-block-end: 0;
+
+    ul {
+      flex-direction: row;
+    }
+
+    a {
+      display: inline-flex;
+      white-space: nowrap;
+      border-inline-start: 0;
+      border-radius: 0;
+      border-block-end: 2px solid transparent;
+
+      &:hover {
+        background: none;
+      }
+
+      &[aria-current='true'] {
+        border-block-end-color: var(--color-primary);
+      }
+    }
   }
 }
 

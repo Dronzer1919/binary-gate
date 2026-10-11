@@ -30,4 +30,24 @@ describe('App shell', () => {
     expect(select.getAttribute('aria-label')).toBe('Theme');
     expect(Array.from(select.options).map((o) => o.value)).toEqual(['', 'dark', 'light', 'high-contrast']);
   });
+
+  it('has a hamburger button that toggles the nav on small screens', async () => {
+    TestBed.configureTestingModule({
+      providers: [provideRouter([]), { provide: SITE_CONFIG, useValue: DEFAULT_SITE_CONFIG }],
+    });
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const button = el.querySelector<HTMLButtonElement>('.menu-toggle')!;
+    const nav = el.querySelector('nav')!;
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(nav.classList).not.toContain('nav--open');
+    button.click();
+    await fixture.whenStable();
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(nav.classList).toContain('nav--open');
+    button.click();
+    await fixture.whenStable();
+    expect(nav.classList).not.toContain('nav--open');
+  });
 });

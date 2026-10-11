@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, inject, Injector, signal } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, Injector, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, skip } from 'rxjs';
@@ -37,6 +37,8 @@ export class App {
   protected readonly active = signal('home');
   /** Section links only mark a current section while the home page is showing. */
   protected readonly onHome = signal(true);
+  /** Mobile hamburger menu state (the nav is always visible on wide screens). */
+  protected readonly menuOpen = signal(false);
 
   private readonly injector = inject(Injector);
   private observer: IntersectionObserver | null = null;
@@ -48,6 +50,7 @@ export class App {
         takeUntilDestroyed(),
       )
       .subscribe((e) => {
+        this.menuOpen.set(false);
         const home = e.urlAfterRedirects.split(/[?#]/)[0] === '/';
         this.onHome.set(home);
         if (home) {
@@ -95,6 +98,15 @@ export class App {
       }
     });
     this.observer = observer;
+  }
+
+  protected toggleMenu(): void {
+    this.menuOpen.update((open) => !open);
+  }
+
+  @HostListener('document:keydown.escape')
+  protected closeMenu(): void {
+    this.menuOpen.set(false);
   }
 
   protected onThemeChange(event: Event): void {

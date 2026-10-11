@@ -7,7 +7,7 @@
       <span>Node Network with Binary Gate</span>
     </a>
 
-    <nav class="nav" aria-label="Primary">
+    <nav id="primary-nav" class="nav" [class.nav--open]="menuOpen()" aria-label="Primary">
       <ul>
         @for (item of navItems; track item.id) {
           <li>
@@ -28,6 +28,19 @@
         }
       </select>
     </div>
+
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-controls="primary-nav"
+      [attr.aria-expanded]="menuOpen()"
+      [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+      (click)="toggleMenu()"
+    >
+      <span class="menu-toggle__bar"></span>
+      <span class="menu-toggle__bar"></span>
+      <span class="menu-toggle__bar"></span>
+    </button>
   </div>
 </header>
 
