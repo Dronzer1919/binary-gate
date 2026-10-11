@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://binarygate.in/sitemap.xml
