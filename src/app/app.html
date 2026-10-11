@@ -7,6 +7,19 @@
       <span>Node Network with Binary Gate</span>
     </a>
 
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-controls="primary-nav"
+      [attr.aria-expanded]="menuOpen()"
+      [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+      (click)="toggleMenu()"
+    >
+      <span class="menu-toggle__bar"></span>
+      <span class="menu-toggle__bar"></span>
+      <span class="menu-toggle__bar"></span>
+    </button>
+
     <nav id="primary-nav" class="nav" [class.nav--open]="menuOpen()" aria-label="Primary">
       <ul>
         @for (item of navItems; track item.id) {
@@ -20,7 +33,7 @@
       </ul>
     </nav>
 
-    <div class="theme">
+    <div class="theme" [class.theme--open]="menuOpen()">
       <select id="theme-select" aria-label="Theme" (change)="onThemeChange($event)">
         <option value="" selected disabled hidden>Theme</option>
         @for (t of themes; track t.value) {
@@ -28,19 +41,6 @@
         }
       </select>
     </div>
-
-    <button
-      type="button"
-      class="menu-toggle"
-      aria-controls="primary-nav"
-      [attr.aria-expanded]="menuOpen()"
-      [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
-      (click)="toggleMenu()"
-    >
-      <span class="menu-toggle__bar"></span>
-      <span class="menu-toggle__bar"></span>
-      <span class="menu-toggle__bar"></span>
-    </button>
   </div>
 </header>
 

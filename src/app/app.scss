@@ -17,6 +17,12 @@
   align-items: center;
   gap: 0.25rem 1.25rem;
   min-block-size: var(--header-h);
+
+  @media (max-width: 63.99rem) {
+    flex-wrap: wrap;
+    gap: 0;
+    padding-block: 0.5rem;
+  }
 }
 
 .brand {
@@ -24,6 +30,7 @@
   align-items: center;
   gap: 0.6rem;
   min-inline-size: 0;
+  flex: 1 1 auto;
   font-weight: 700;
   font-size: 1.125rem;
   letter-spacing: -0.01em;
@@ -33,6 +40,10 @@
   span {
     // Long company name: wrap on phones instead of pushing the controls off screen.
     line-height: 1.2;
+
+    @media (max-width: 63.99rem) {
+      font-size: 1rem;
+    }
   }
 
   &:hover {
@@ -60,24 +71,42 @@
   justify-content: center;
   gap: 0.3rem;
   flex: none;
-  inline-size: var(--size-touch);
-  block-size: var(--size-touch);
+  order: 2;
+  margin-inline-start: 0.75rem;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
   padding: 0;
-  color: var(--color-text);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.6rem;
+  color: var(--color-on-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent-2));
+  border: 0;
+  border-radius: 0.85rem;
+  box-shadow: 0 6px 18px var(--color-glow);
   cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:active {
+    transform: scale(0.94);
+  }
 
   &__bar {
     display: block;
     inline-size: 1.25rem;
     block-size: 2px;
     background: currentcolor;
-    border-radius: 1px;
+    border-radius: 2px;
     transition:
-      transform 0.2s ease,
-      opacity 0.2s ease;
+      transform 0.25s ease,
+      opacity 0.2s ease,
+      inline-size 0.25s ease;
+  }
+
+  // The middle bar is shorter at rest: a small detail that reads as "menu", not "list".
+  &__bar:nth-child(2) {
+    inline-size: 0.85rem;
+    align-self: flex-end;
+    margin-inline-end: 0.75rem;
   }
 
   &[aria-expanded='true'] &__bar:nth-child(1) {
@@ -102,10 +131,16 @@
   display: none;
   flex: 1 1 100%;
   order: 4;
-  padding-block-end: 0.75rem;
+  margin-block-start: 0.5rem;
+  padding: 0.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 1rem;
+  box-shadow: 0 16px 40px var(--color-shadow);
 
   &--open {
     display: block;
+    animation: menu-in 0.18s ease-out;
   }
 
   ul {
@@ -121,8 +156,9 @@
     padding-inline: 0.75rem;
     color: var(--color-text-muted);
     text-decoration: none;
+    font-weight: 500;
     border-inline-start: 3px solid transparent;
-    border-radius: 0.4rem;
+    border-radius: 0.6rem;
 
     &:hover {
       color: var(--color-text);
@@ -133,6 +169,7 @@
     &[aria-current='true'],
     &[aria-current='page'] {
       color: var(--color-text);
+      background: var(--color-surface-alt);
       border-inline-start-color: var(--color-primary);
     }
   }
@@ -141,7 +178,12 @@
     display: block;
     flex: 1;
     order: 0;
-    padding-block-end: 0;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
 
     ul {
       flex-direction: row;
@@ -173,6 +215,22 @@
   font-size: 0.875rem;
   color: var(--color-text-muted);
 
+  // On phones the theme picker lives inside the opened menu, under the links.
+  @media (max-width: 63.99rem) {
+    display: none;
+    flex: 1 1 100%;
+    order: 5;
+    margin: 0.5rem 0 0;
+
+    &--open {
+      display: flex;
+    }
+
+    select {
+      inline-size: 100%;
+    }
+  }
+
   select {
     min-block-size: var(--size-touch);
     padding-inline: 0.5rem;
@@ -203,4 +261,17 @@ main:focus {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.5rem 2rem;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav--open {
+    animation: none;
+  }
 }
