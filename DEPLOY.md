@@ -30,3 +30,11 @@ Flow: change locally -> `git push` (main) -> GitHub Action builds -> `deploy` br
 
 ## Later: server (SSR) deploy
 The Node/Express server (`npm run start:host`, `scripts/start.mjs`) needs a Node.js plan; only required if you add server-rendered routes or an API.
+
+## Docker (current setup on the VPS)
+The other VPS projects run in Docker, so binarygate does too: `Dockerfile` (build + nginx), `docker-compose.yml`
+(container listens on 127.0.0.1:8085) and `docker/nginx.conf`. The host nginx keeps TLS (certbot) and proxies to it:
+```
+location / { proxy_pass http://127.0.0.1:8085; proxy_set_header Host $host; proxy_set_header X-Forwarded-Proto $scheme; }
+```
+Update: `git pull && docker compose up -d --build` in the project folder on the VPS.

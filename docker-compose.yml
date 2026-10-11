@@ -1,0 +1,8 @@
+# binarygate.in: static site container. Only listens on localhost; the host nginx proxies to it.
+services:
+  binarygate:
+    build: .
+    container_name: binarygate
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8085:80"
